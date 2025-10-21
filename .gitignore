@@ -361,12 +361,14 @@ $RECYCLE.BIN/
 
 **/tmp_*
 
-PuzzleBoard.py
-_PuzzleBoard.py
+/devel
 bevel-test.zsh
 /*.jpg
 /*.png
 !photo*.jpg
 !photoE.png
+!Square*.png
+!Rect*.png
+!Moon*.png
 
 __pycache__

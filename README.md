@@ -198,7 +198,7 @@ A puzzle with >= 45 pieces and with animation:
 <br/>
 <img align="center" title="Puzzle Image" width="800" src="./ExampleA/done_puzzle.apng.png">
 <div align="center">
-    Photo: 800 x 493 Pixel. APNG Animation. 90% completed
+    Photo: 800 x 493 Pixel. APNG Animation.
 </div>
 </div>
 
@@ -210,11 +210,15 @@ Run the following command in the directory containing the Dockerfile:
 
 ## Example B
 
-A minimal puzzle with four pieces:
+A minimal puzzle with four pieces and variation of the `seed` value:
 
 Command
 
     python PlayPuzzle.py --minparts 4 --photo PuzzleMitVierTeilen.png --pz 100
+
+other `seed` value:
+
+    python PlayPuzzle.py --minparts 4 --photo PuzzleMitVierTeilen.png --pz 100 --seed 31
 
 Output
 
@@ -227,6 +231,11 @@ Output
 <img align="center" title="Puzzle Image" width="800" src="./ExampleB/done_puzzle.webp.png">
 <div align="center">
     Photo: 800 x 200 Pixel ( <code>cwebp -near_lossless 70</code> )
+</div>
+<br/>
+<img align="center" title="Puzzle Image" width="800" src="./ExampleB/done_puzzle_2.webp.png">
+<div align="center">
+    Photo: 800 x 200 Pixel, seed=31 ( <code>cwebp -near_lossless 70</code> )
 </div>
 </div>
 

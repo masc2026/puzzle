@@ -38,14 +38,14 @@ Python 3.13 and Requirements
 
 ### Zsh
 
-Required with options `--pz` and `-an`
+Required with options `--pz` and `--animate`
 
     zsh --version
     zsh 5.9 (x86_64-apple-darwin23.0)
 
 ### Others
 
-Required with animation (option `-an`) and assembling the puzzle (option `--pz`)
+Required with animation (option `--animate`) and assembling the puzzle (option `--pz`)
 
 #### Imagemagick®
 
@@ -106,7 +106,7 @@ Command
 
 Output
 
-    usage: PlayPuzzle [-h] [-v] [-f <fmt>] [-c <farbe>] [--by-type-subdirs] [--swap-twins] [--animate <fmt>] [--photo <file>] [--width <int>]
+    usage: PlayPuzzle [-h] [-v] [-f <fmt>] [-c <farbe>] [--by-type-subdirs] [--swap-twins] [--game] [--animate <fmt>] [--photo <file>] [--width <int>]
                     [--height <int>] [--dpi <int>] [--pz <0-100>] [--equal-pairs <int>] [--seed <int>] [--minparts <int>] [--maxparts <int>]
 
     PlayPuzzle – Generator und Renderer
@@ -120,6 +120,7 @@ Output
     -c, --color <farbe>  Füllfarbe (z. B. "k" = schwarz) (default: k)
     --by-type-subdirs    Puzzleteile in Typsubordnern speichern (default: False)
     --swap-twins         Paarweise identisch geformte Teile beim Zusammenbau tauschen (default: False)
+    --game               Öffne das Puzzle zum Spielen im Browser (default: False)
 
     Animation:
     --animate <fmt>      Puzzle-Animation mit angegebenem Format erzeugen (default: None)
@@ -139,11 +140,12 @@ Output
     --minparts <int>     Minimale Teilezahl (≥2, ≤4950) (default: None)
     --maxparts <int>     Maximale Teilezahl (≥2, ≤4950) (default: None)
 
-    Beispiel: Baue aus dem Bild ein Puzzle mit 30 bis 40 Teilen und erstelle ein neues Bild aus 60% der Teile. Der Wert für 'seed' bestimmt die zufällige Anordnung.
+    Beispiel: Baue aus dem Bild ein Puzzle mit 30 bis 40 Teilen und erstelle ein neues Bild mit 60 % der Teile. Der Wert für 'seed' bestimmt die zufällige Anordnung.
     
     python PlayPuzzle.py --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg --pz 60
 
     docker run -it -v .:/app --rm puzzle --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg --pz 60
+
 
 
 ## Using with Docker
@@ -174,7 +176,7 @@ Command
 
 Output
 
-    PlayPuzzle v1.0.4
+    PlayPuzzle v1.0.5
     PuzzleBoard v1.1.8
 
 ## Example A
@@ -303,6 +305,19 @@ Run the following command in the directory containing the Dockerfile:
 
     docker run -it -v .:/app --rm puzzle --minparts 64 --photo QuadratBuntMitZahlen.jpg --equal-pairs 10 --swap-twins --pz 100
 
+## Example E
+
+Play the puzzle in **the** browser:
+
+    python PlayPuzzle.py --minparts 10 --photo Landschaft.jpg --animate apng --pz 70 --game 
+
+<div align="center">
+<br>
+<img align="center" title="Puzzle Image" width="1000" src="./ExampleA/browsergame.webp.png">
+<div align="center">
+    Browser Window with the Puzzle Game
+</div>
+</div>
 
 # References
 
@@ -313,10 +328,6 @@ Run the following command in the directory containing the Dockerfile:
 ### ImageMagick - Bevel
 
 - https://usage.imagemagick.org/transform/#shade_blur
-
-## Affinity Photo
-
-- https://affinity.serif.com
 
 ## Webp
 

@@ -61,6 +61,22 @@
       "justMyCode": true
     },
     {
+      "name": "Example E - Landschaft",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/PlayPuzzle.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--minparts", "10",
+        "--photo", "Landschaft.jpg",
+        "--animate", "apng",
+        "--pz", "100",
+        "--game"
+      ],
+      "justMyCode": true
+    },
+    {
       "name": "Show Help",
       "type": "debugpy",
       "request": "launch",

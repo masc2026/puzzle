@@ -4,7 +4,7 @@
 
 ''' play puzzle '''
 
-__version__ = '1.0.4'
+__version__ = '1.0.5'
 
 import sys
 if sys.version_info < (3, 13):
@@ -19,6 +19,15 @@ import datetime
 from PIL import Image
 import matplotlib.pyplot as plt
 import shutil
+
+import http.server
+import socketserver
+import threading
+import webbrowser
+import time
+import functools
+
+PORT = 9000
 
 class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter,
                       argparse.RawDescriptionHelpFormatter):
@@ -121,6 +130,67 @@ def check_requirements(args):
     if args.pz and args.pz > 0:
         check_command_exists("convert")
 
+def open_in_browser(json_file_path: str, server_root: str):
+    """
+    Startet einen lokalen Webserver, um das Puzzle zu hosten und öffnet es im Browser.
+    
+    :param json_file_path: Der *vollständige* Pfad zur JSON-Plandatei.
+    :param server_root: Der *vollständige* Pfad zum Stammverzeichnis des Servers.
+    """
+    
+    # 1. Das Stammverzeichnis des Servers festlegen
+    target_directory = os.path.abspath(server_root)
+    
+    # 2. Den relativen Pfad der JSON-Datei *vom Server-Root aus* berechnen
+    #    Dies ist, was wir an die URL anhängen müssen.
+    abs_json_path = os.path.abspath(json_file_path)
+    
+    # os.path.relpath ist hier entscheidend
+    try:
+        json_filename_for_url = os.path.relpath(abs_json_path, target_directory)
+        # Auf Windows-Systemen Backslashes durch Slashes ersetzen,
+        # da URLs Slashes benötigen
+        json_filename_for_url = json_filename_for_url.replace(os.path.sep, '/')
+    except ValueError:
+        print(f"Fehler: Die JSON-Datei {abs_json_path} befindet sich nicht "
+              f"innerhalb des Server-Roots {target_directory}.")
+        return
+
+    # 3. Handler erstellen, der im korrekten target_directory dient
+    Handler = functools.partial(http.server.SimpleHTTPRequestHandler, 
+                                directory=target_directory)
+
+    # "Port belegt"-Problem beheben
+    socketserver.TCPServer.allow_reuse_address = True
+    
+    # Server in einem Thread starten
+    httpd = socketserver.TCPServer(("", PORT), Handler)
+    
+    server_thread = threading.Thread(target=httpd.serve_forever)
+    server_thread.daemon = True  
+    server_thread.start()
+
+    print(f"Server gestartet unter http://localhost:{PORT}")
+    print(f"Dient Dateien aus: {target_directory}") # <-- Sollte jetzt /.../puzzle/ sein
+
+    # 4. URL für den 'web'-Unterordner anpassen, mit dem korrekten relativen JSON-Pfad
+    url = f"http://localhost:{PORT}/web/index.html?plan={json_filename_for_url}"
+    
+    print(f"Öffne Browser unter: {url}")
+    webbrowser.open_new_tab(url)
+    
+    time.sleep(1) 
+    
+    print("\nDrücken Sie Strg+C im Terminal, um den Server zu stoppen und das Skript zu beenden.")
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("\nServer wird heruntergefahren...")
+        httpd.shutdown()
+        httpd.server_close()
+        print("Server gestoppt.")
+
 valid_c_values = ['k', 'b', 'r']
 
 valid_f_values = ['png', 'svg']
@@ -180,7 +250,12 @@ out_grp.add_argument(
     default=False,
     help="Paarweise identisch geformte Teile beim Zusammenbau tauschen",
 )
-
+out_grp.add_argument(
+    "--game",
+    action="store_true",
+    default=False,
+    help="Öffne das Puzzle zum Spielen im Browser",
+)
 # Animation
 anim_grp = parser.add_argument_group("Animation")
 anim_grp.add_argument(
@@ -316,3 +391,23 @@ if PuzzleBoard.PuzzleConfig.FORMAT=="png" and not(PuzzleBoard.PuzzleConfig.PHOTO
   if PuzzleBoard.PuzzleConfig.PZ>0:
     print("Play puzzle")
     game.makePuzzle(target_directory)
+    if args.game:
+       # Dies ist das Stammverzeichnis des Servers
+       # (das Verzeichnis, in dem PlayPuzzle.py liegt)
+       server_root_dir = os.path.dirname(os.path.abspath(__file__))
+       
+       # Erstellt den vollständigen Pfad zur JSON-Datei
+       json_full_path = os.path.join(target_directory, "puzzle_plan.json")
+       
+       # Pfad zur HTML-Datei für die Überprüfung
+       html_path = os.path.join(server_root_dir, "web", "index.html")
+       
+       # Prüfen, ob alle Dateien da sind
+       if not os.path.exists(json_full_path):
+           print(f"FEHLER: 'puzzle_plan.json' nicht gefunden unter: {json_full_path}")
+           print("Bitte passen Sie 'json_relative_path' im Skript an.")
+       elif not os.path.exists(html_path):
+           print(f"FEHLER: 'index.html' nicht im 'web'-Unterordner gefunden ({html_path})")
+       else:
+           # Funktion mit BEIDEN Pfaden aufrufen
+           open_in_browser(json_full_path, server_root_dir)

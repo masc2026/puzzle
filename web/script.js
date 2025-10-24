@@ -139,7 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         await Promise.all(loadPromises);
-        pieces.reverse(); // Für korrektes Anklicken
+        // Wir müssen .reverse() hier nicht mehr machen, da die onMouseDown-Schleife
+        // jetzt ohnehin rückwärts läuft und .push() in onMouseDown das Teil nach oben holt.
+        // pieces.reverse(); // <- Nicht mehr notwendig
     }
 
     // --- Haupt-Zeichenfunktion ---
@@ -165,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 4. Puzzleteile zeichnen
+        // 4. Puzzleteile zeichnen (von unten nach oben)
         for (const piece of pieces) {
             ctx.drawImage(piece.img, piece.x, piece.y);
         }
@@ -184,20 +186,41 @@ document.addEventListener('DOMContentLoaded', () => {
     function onMouseDown(e) {
         const pos = getMousePos(e);
         
-        for (const piece of pieces) {
-            // Klick-Erkennung (unverändert)
+        // <<< FIX: Schleife rückwärts laufen lassen (von oben nach unten) >>>
+        // Wir iterieren von der höchsten (zuletzt gezeichneten) zur niedrigsten Ebene.
+        for (let i = pieces.length - 1; i >= 0; i--) {
+            const piece = pieces[i];
+
+            // Klick-Bereich-Berechnung
+            const totalWidth = piece.img.naturalWidth;
+            const totalHeight = piece.img.naturalHeight;
+
+            const borderX = totalWidth / 4;
+            const borderY = totalHeight / 4;
+
+            const visibleX_start = piece.x + borderX;
+            const visibleY_start = piece.y + borderY;
+            const visibleX_end = piece.x + totalWidth - borderX;
+            const visibleY_end = piece.y + totalHeight - borderY;
+
+            // Klick-Erkennung nur im sichtbaren Bereich
             if (!piece.isSnapped && 
-                pos.x > piece.x && pos.x < piece.x + piece.img.naturalWidth &&
-                pos.y > piece.y && pos.y < piece.y + piece.img.naturalHeight) 
+                pos.x > visibleX_start && pos.x < visibleX_end &&
+                pos.y > visibleY_start && pos.y < visibleY_end) 
             {
                 activePiece = piece;
                 activePiece.isDragging = true;
+                
                 mouseOffsetX = pos.x - activePiece.x;
                 mouseOffsetY = pos.y - activePiece.y;
                 
-                // Angeklicktes Teil nach oben holen
-                pieces = pieces.filter(p => p.id !== activePiece.id);
+                // <<< FIX: Teil nach oben holen (an das Ende des Arrays verschieben) >>>
+                // 1. Entferne das Teil von seiner aktuellen Position (i)
+                pieces.splice(i, 1);
+                // 2. Füge es am Ende des Arrays hinzu (damit es zuletzt gezeichnet wird)
                 pieces.push(activePiece);
+                
+                // Da wir das oberste Teil gefunden haben, können wir aufhören.
                 break;
             }
         }
@@ -215,8 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!activePiece) return;
         activePiece.isDragging = false;
 
-        // <<< Snap-Logik (unverändert) >>>
-        // Funktioniert, da targetX und targetY bereits den Offset der Zielfläche enthalten.
+        // Snap-Logik
         const dx = Math.abs(activePiece.x - activePiece.targetX);
         const dy = Math.abs(activePiece.y - activePiece.targetY);
 

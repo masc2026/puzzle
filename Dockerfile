@@ -26,6 +26,7 @@ RUN rm -rf /tmp/apngasm \
 
 RUN mkdir /app
 WORKDIR /app
+ENV MPLCONFIGDIR=/app/.cache/matplotlib
 
 COPY . /app
 

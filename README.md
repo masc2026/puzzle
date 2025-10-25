@@ -15,7 +15,7 @@ Note for Windows users: this project uses `zsh` and UNIX-specific tools. Native 
 
 For native execution, it is recommended to use `pyenv` to manage your Python environment. This avoids conflicts with the system Python and ensures consistent versions across systems.
 
-For `pyenv` based setup on Linux or macOS run the commands in a `bash` shell:
+For `pyenv` based setup on Linux or macOS run:
 
 ### Pyenv and Python
 
@@ -37,8 +37,6 @@ Python 3.13 and Requirements
     pip install -r requirements.txt
 
 ### Zsh
-
-Required with options `--pz` and `--animate`
 
     zsh --version
     zsh 5.9 (x86_64-apple-darwin23.0)
@@ -145,8 +143,6 @@ Output
     python PlayPuzzle.py --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg --pz 60
 
     docker run -it -v .:/app --rm puzzle --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg --pz 60
-
-
 
 ## Using with Docker
 
@@ -318,6 +314,31 @@ Play the puzzle in **the** browser:
     Browser Window with the Puzzle Game
 </div>
 </div>
+
+# Run in VSCode
+
+You can run and debug the project directly in Visual Studio Code. This repository is already configured with a `launch.json` and `settings.json` to make this easy.
+
+## Prerequisites
+
+Before you start, you must set up your local Python environment. This project is configured to find all dependencies in a local `.venv` directory. See *Pyenv and Python*.
+
+## VSCode Setup
+
+1.  Open the *entire* project folder in VSCode (`File > Open Folder...`).
+2.  Install the official **Python extension** from Microsoft. You can find it in the "Extensions" tab (Ctrl+Shift+X) by searching for `ms-python.python`.
+
+## Run and Debug
+
+This project is "ready to debug." The included `.vscode/settings.json` file will automatically tell VSCode to use the Python interpreter from your `.venv` folder.
+
+1.  Go to the **Run and Debug** view on the left-hand sidebar (the icon with a play button and a bug 🐞).
+2.  At the top of the pane, you will see a **green play button** and a dropdown menu.
+3.  This menu is pre-filled with all the debug targets from the `.vscode/launch.json` file.
+4.  Select the target you want to run (e.g., "Example A - Landschaft").
+5.  Press the green play button (or press `F5`) to start the script.
+
+You can now set breakpoints, inspect variables, and use the full VSCode debugger.
 
 # References
 

@@ -1,38 +1,61 @@
-mp_*
-Example*
-img/
-*.jpg
-*.png
-
-PuzzleBoard.py
-_PuzzleBoard.py
-
-*.tmp
-*.log
-*.pid
-*.swp
-
-.git
-.gitignore
-.svn
-.hg
+# Verhindert, dass der gesamte Git-Verlauf in den Build-Kontext geladen wird
+.git/
+.svn/
+.hg/
 .cvsignore
 
+# Werden im Container neu installiert oder gebaut
 node_modules/
 dist/
 build/
 temp/
 devel/
 
+# === Python ===
+# Bytecode und Caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Lokale virtuelle Umgebungen
+.venv/
+venv/
+env/
+
+# Die lokale pyenv-Version ist für den Docker-Build irrelevant
+.python-version
+
+# === IDE (VSCode) ===
+.vscode/
+
+# === Betriebssystem-Dateien ===
+.DS_Store
+Thumbs.db
+
+# === Logs & temporäre Dateien ===
+*.tmp
+*.log
+*.pid
+*.swp
+.cache/
+**/tmp_*/
+
+# === Optimierung: Dokumentation & Archive ===
+# Verhindert unnötiges Cache-Busting
 *.md
 *.tar
 *.zip
 *.tar.gz
 
-Dockerfile
-.dockerignore
+# Diese sind wahrscheinlich sicher zu ignorieren
 
-.DS_Store
-Thumbs.db
+PuzzleBoard.py
+_PuzzleBoard.py
 
-__pycache__
+img/
+*.jpg
+*.png
+
+mp_*
+Example*

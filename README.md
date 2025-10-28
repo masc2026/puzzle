@@ -177,34 +177,17 @@ Output
 
 ## Example A
 
-A puzzle with >= 45 pieces and with animation:
+Play the puzzle in **the** browser:
 
-    python PlayPuzzle.py --photo Landschaft.jpg --minparts 45 --pz 100 --animate apng
-
-    Puzzle piece width-to-height ratio: 1.0818120351588911
-    Make a puzzle with 54 (9x6) parts!
-    Play puzzle
+    python PlayPuzzle.py --minparts 7 --photo NativeAmericanTribesman.jpg --pz 100 --game 
 
 <div align="center">
-<br/>
-<img align="center" title="Puzzle Image" width="800" src="./ExampleA/done_puzzle.webp.png">
+<br>
+<img align="center" title="Puzzle Image" width="600" src="./ExampleA/browsergame.webp.png">
 <div align="center">
-    Photo: 800 x 493 Pixel ( <code>cwebp -near_lossless 70</code> )
+    Browser Window with a Puzzle Game
 </div>
 </div>
-<div align="center">
-<br/>
-<img align="center" title="Puzzle Image" width="800" src="./ExampleA/done_puzzle.apng.png">
-<div align="center">
-    Photo: 800 x 493 Pixel. APNG Animation.
-</div>
-</div>
-
-### Example A with Docker
-
-Run the following command in the directory containing the Dockerfile:
-
-    docker run -it -v .:/app --rm puzzle --photo Landschaft.jpg --minparts 45 --pz 100 --animate apng
 
 ## Example B
 
@@ -303,17 +286,34 @@ Run the following command in the directory containing the Dockerfile:
 
 ## Example E
 
-Play the puzzle in **the** browser:
+A puzzle with >= 45 pieces and with animation:
 
-    python PlayPuzzle.py --minparts 10 --photo Landschaft.jpg --animate apng --pz 70 --game 
+    python PlayPuzzle.py --photo Landschaft.jpg --minparts 45 --pz 100 --animate apng
+
+    Puzzle piece width-to-height ratio: 1.0818120351588911
+    Make a puzzle with 54 (9x6) parts!
+    Play puzzle
 
 <div align="center">
-<br>
-<img align="center" title="Puzzle Image" width="1000" src="./ExampleA/browsergame.webp.png">
+<br/>
+<img align="center" title="Puzzle Image" width="800" src="./ExampleA/done_puzzle.webp.png">
 <div align="center">
-    Browser Window with the Puzzle Game
+    Photo: 800 x 493 Pixel ( <code>cwebp -near_lossless 70</code> )
 </div>
 </div>
+<div align="center">
+<br/>
+<img align="center" title="Puzzle Image" width="800" src="./ExampleA/done_puzzle.apng.png">
+<div align="center">
+    Photo: 800 x 493 Pixel. APNG Animation.
+</div>
+</div>
+
+### Example E with Docker
+
+Run the following command in the directory containing the Dockerfile:
+
+    docker run -it -v .:/app --rm puzzle --photo Landschaft.jpg --minparts 45 --pz 100 --animate apng
 
 # Run in VSCode
 

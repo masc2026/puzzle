@@ -1,0 +1,85 @@
+# === Betriebssystem (Linux & macOS) ===
+# macOS-spezifische Metadaten
+.DS_Store
+._*
+.AppleDouble
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# Linux-Backup-Dateien und Systemordner
+*~
+.Trash-*
+.nfs*
+
+# === Python ===
+# Bytecode und Caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints
+
+# C-Extensions
+*.so
+
+# Virtuelle Umgebungen (venv)
+# pyenv selbst wird global verwaltet, aber lokale venvs sollten ignoriert werden.
+.venv/
+venv/
+env/
+ENV/
+# Hinweis: .python-version (von pyenv) wird meistens EINGECHECKT, 
+# damit alle im Team dieselbe Version nutzen. Daher ist es hier nicht drin.
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+sdist/
+wheels/
+*.egg
+MANIFEST
+
+# Test-Reports
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# === IDE / Editor (VSCode) ===
+# Ignoriere alles im .vscode-Ordner...
+.vscode/*
+
+# ...AUSSER den Projekt-Einstellungen, die geteilt werden sollen.
+# (Negations-Pattern !)
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+
+# === Projekt-Spezifisch ===
+# Docker
+# Lokale Override-Dateien sollten nicht geteilt werden
+docker-compose.override.yml
+.dockerignore 
+# (Hinweis: .dockerignore selbst wird eingecheckt, aber oft will man es nicht im gitignore)
+# Falls du .dockerignore auch ignorieren willst, entferne das obige Kommentarzeichen.
+
+# Geheime Daten / Umgebungsvariablen
+.env
+.env.*
+!.env.example
+PuzzleBoard.py
+_PuzzleBoard.py
+
+# Benutzerdefinierte Ordner (deine Anforderung)
+**/tmp_*/
+
+# Logs
+*.log
+logs/
+.cache/

@@ -1,0 +1,104 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Example A - Landschaft",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/PlayPuzzle.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--minparts", "45",
+        "--photo", "Landschaft.jpg",
+        "--animate", "apng",
+        "--pz", "100"
+      ],
+      "justMyCode": true
+    },
+    {
+      "name": "Example B - PuzzleMitVierTeilen",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/PlayPuzzle.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--minparts", "4",
+        "--photo", "PuzzleMitVierTeilen.png",
+        "--pz", "100"
+      ],
+      "justMyCode": true
+    },
+    {
+      "name": "Example C - QuadratRotMitZahlen",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/PlayPuzzle.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--minparts", "25",
+        "--photo", "QuadratRotMitZahlen.jpg",
+        "--pz", "70"
+      ],
+      "justMyCode": true
+    },
+    {
+      "name": "Example D - QuadratBuntMitZahlen",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/PlayPuzzle.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--minparts", "64",
+        "--equal-pairs", "10",
+        "--swap-twins",
+        "--photo", "QuadratBuntMitZahlen.jpg",
+        "--pz", "100"
+      ],
+      "justMyCode": true
+    },
+    {
+      "name": "Example E - Landschaft",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/PlayPuzzle.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--minparts", "10",
+        "--photo", "Landschaft.jpg",
+        "--animate", "apng",
+        "--pz", "100",
+        "--game"
+      ],
+      "justMyCode": true
+    },
+    {
+      "name": "Show Help",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/PlayPuzzle.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--help"
+      ],
+      "justMyCode": true
+    },
+    {
+      "name": "Show Version",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/PlayPuzzle.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--version"
+      ],
+      "justMyCode": true
+    }
+  ]
+}
